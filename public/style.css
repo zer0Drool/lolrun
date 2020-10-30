@@ -1,0 +1,14 @@
+* {
+    margin: 0;
+}
+
+p {
+    position: absolute;
+    z-index: 1;
+    bottom: 20px;
+    left: 20px;
+    color: lime;
+    font-family: 'Menlo';
+    font-style: italic;
+    font-size: 18px;
+}
