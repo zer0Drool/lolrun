@@ -2,6 +2,7 @@ let boxes = 20;
 let textures = [];
 let currentPos = 0;
 let arrow;
+let drawSecond = false;
 let sphereRot = 0;
 let cameraPos = {x: 0, y: 0, z: 0};
 let arrows = [
@@ -340,17 +341,15 @@ function reset() {
 }
 
 function preload() {
+  for(let i = 0; i < boxes; i++) {
 
-    for(let i = 0; i < boxes; i++) {
+     let tex = loadImage(`assets/boxes/${i + 1}.jpg`);
+     textures.push(tex);
 
-        let tex = loadImage(`assets/boxes/${i + 1}.jpg`);
-        textures.push(tex);
+  };
 
-    };
-
-    arrow = loadModel("assets/3d/arrow.obj", true);
-    console.log(arrow);
-
+  arrow = loadModel("assets/3d/arrow.obj", true);
+  console.log(arrow);
 };
 
 function setup() {
@@ -366,7 +365,7 @@ function setup() {
 };
 
 function draw() {
-    // console.log('draw');
+  // console.log('draw');
   angleMode(DEGREES);
   clear();
 
@@ -374,39 +373,42 @@ function draw() {
 
   // spheres
   for (let i = 0; i < boxes; i++) {
-
-      if (i === 0) {
-        translate(cameraPos.x, cameraPos.y, cameraPos.z);
-      } else {
-        translate(0, 0, -4010);
-      };
-      push();
-      noStroke();
-      rotateY(sphereRot);
-      texture(textures[i]);
-      sphere(2000);
-      pop();
-      
+    if (i === 0) {
+      translate(cameraPos.x, cameraPos.y, cameraPos.z);
+    } else {
+      translate(0, 0, -4010);
+    }
+    push();
+    noStroke();
+    rotateY(sphereRot);
+    if (i === currentPos - 1) {
+      texture(textures[currentPos - 1]);
+    }
+    if (i === currentPos) {
+      texture(textures[currentPos]);
+    }
+    if (i === currentPos + 1) {
+      texture(textures[currentPos + 1]);
+    }
+    sphere(2000);
+    pop();
   };
 
   // arrows
   for (let i = 0; i < arrows[currentPos].length; i++) {
-
-      scale(1, 0.5, 1.5);
-      push();
-       noStroke();
-       translate(
-         arrows[currentPos][i].position[0],
-         arrows[currentPos][i].position[1],
-         arrows[currentPos][i].position[2]
-       );
-       rotateY(arrows[currentPos][i].rotation);
-       specularMaterial('gold'); // For effect
-       model(arrow);
-       pop();
-
-  };
-
+    scale(1, 0.5, 1.5);
+    push();
+    noStroke();
+    translate(
+      arrows[currentPos][i].position[0],
+      arrows[currentPos][i].position[1],
+      arrows[currentPos][i].position[2]
+    );
+    rotateY(arrows[currentPos][i].rotation);
+    specularMaterial("gold"); // For effect
+    model(arrow);
+    pop();
+  }
 };
 
 
@@ -424,15 +426,15 @@ function keyPressed() {
     };
 
     if (
-      currentPos === 6 ||
-      currentPos === 7 ||
-      currentPos === 8 ||
-      currentPos === 21 ||
-      currentPos === 22
+        currentPos === 6 ||
+        currentPos === 7 ||
+        currentPos === 8 ||
+        currentPos === 21 ||
+        currentPos === 22
     ) {
-      sphereRot = 180;
+        sphereRot = 180;
     } else {
-      sphereRot = 0;
+        sphereRot = 0;
     };
 
     console.log(currentPos);
