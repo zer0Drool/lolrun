@@ -1,8 +1,9 @@
-let boxes = 28;
+let boxes = 20;
 let textures = [];
 let currentPos = 0;
 let arrow;
 let sphereRot = 0;
+let cameraPos = {x: 0, y: 0, z: 0};
 let arrows = [
   [
     // 0
@@ -310,6 +311,22 @@ let arrows = [
   ]
 ];
 
+let loadInt;
+let loadText = ['loading', 'loading.', 'loading..', 'loading...'];
+let loadWrap = document.getElementById('loading-wrap');
+let loadCount = 0;
+
+loadInt = setInterval(loading, 200);
+
+function loading() {
+    console.log('yeet');
+    loadWrap.children[0].innerText = loadText[loadCount];
+    loadCount++;
+    if (loadCount > loadText.length - 1) {
+        loadCount = 0;
+    };
+};
+
 let x = 0;
 let y = 800;
 let z = -500;
@@ -332,57 +349,64 @@ function preload() {
     };
 
     arrow = loadModel("assets/3d/arrow.obj", true);
+    console.log(arrow);
 
 };
 
 function setup() {
+
   createCanvas(window.innerWidth, window.innerHeight, WEBGL);
+  perspective(PI / 3.0, width / height, 0.1, 50000);
+  setTimeout(() => {
+       loadWrap.style.display = "none";
+       clearInterval(loadInt);
+       loadCount = 0;
+  }, 500);
+
 };
 
 function draw() {
-  background(0, 255, 0);
+    // console.log('draw');
   angleMode(DEGREES);
+  clear();
 
-  orbitControl(2, 2, 0);
+  orbitControl(2, 2, 0.5);
 
-  push();
-  noStroke();
-  rotateY(sphereRot);
-  texture(textures[currentPos]);
-  sphere(2000);
-  pop();
+  // spheres
+  for (let i = 0; i < boxes; i++) {
+
+      if (i === 0) {
+        translate(cameraPos.x, cameraPos.y, cameraPos.z);
+      } else {
+        translate(0, 0, -4010);
+      };
+      push();
+      noStroke();
+      rotateY(sphereRot);
+      texture(textures[i]);
+      sphere(2000);
+      pop();
+      
+  };
 
   // arrows
-    for (let i = 0; i < arrows[currentPos].length; i++) {
-        scale(1, 0.5, 1.5);
-        push();
-        noStroke();
-        translate(
-          arrows[currentPos][i].position[0],
-          arrows[currentPos][i].position[1],
-          arrows[currentPos][i].position[2]
-        );
-        rotateY(arrows[currentPos][i].rotation);
-        specularMaterial('gold'); // For effect
-        model(arrow);
-        pop();
+  for (let i = 0; i < arrows[currentPos].length; i++) {
 
-    };
+      scale(1, 0.5, 1.5);
+      push();
+       noStroke();
+       translate(
+         arrows[currentPos][i].position[0],
+         arrows[currentPos][i].position[1],
+         arrows[currentPos][i].position[2]
+       );
+       rotateY(arrows[currentPos][i].rotation);
+       specularMaterial('gold'); // For effect
+       model(arrow);
+       pop();
 
-//   for (let i = 0; i < 1; i++) {
-//     scale(1, 0.5, 1.5);
-//     push();
-//     noStroke();
-//     translate(
-//       x,
-//       y,
-//       z
-//     );
-//     rotateY(globRot);
-//     specularMaterial("gold"); // For effect
-//     model(arrow);
-//     pop();
-//   }
+  };
+
 };
 
 
@@ -390,10 +414,12 @@ function keyPressed() {
     if (key === 'w') {
         if (currentPos < boxes - 1) {
             currentPos++;
+            TweenLite.to(cameraPos, 0.2, { z: z += 4010 });
         };
     } else if (key === 's') {
         if (currentPos > 0) {
             currentPos--;
+            TweenLite.to(cameraPos, 0.2, { z: z -= 4010 });
         };
     };
 
