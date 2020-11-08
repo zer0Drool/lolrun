@@ -1,0 +1,90 @@
+@keyframes ringing {
+    0% { transform: rotate(-0.2deg) }
+    50% { transform: rotate(0) }
+    100% { transform: rotate(0.2deg) }
+}
+
+.ringing {
+    animation: ringing 0.1s infinite;
+}
+
+#phone-hide-wrap {
+    position: absolute;
+    height: 740px;
+    width: 355px;
+    right: -900px;
+    bottom: -30px;
+    /* right: 30px; */
+    transition: right 2s ease-in-out;
+}
+
+#phone-wrap {
+    position: absolute;
+    height: 740px;
+    width: 355px;
+    transform-origin: center center;
+}
+
+#hide-phone {
+    pointer-events: none;
+    opacity: 0;
+    position: absolute;
+    width: 30px;
+    top: -30px;
+    right: -20px;
+    cursor: pointer;
+    transition: opacity 0.4s;
+}
+
+#hide-phone:hover {
+    filter: brightness(110%);
+}
+
+#phone-img {
+    position: absolute;
+    width: 350px;
+    z-index: 1;
+    pointer-events: none;
+}
+
+#phone-content-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.phone-content-vid {
+    width: 100%;
+}
+
+.phone-content-img {
+    width: 100%;
+}
+
+#mute-button {
+    position: absolute;
+    width: 40px;
+    top: 10px;
+    right: 16px;
+    opacity: 0;
+    transition: opacity 0.3s ease-out;
+    z-index: 2;
+    cursor: pointer;
+    -webkit-filter: drop-shadow(1px 1px 1px #fff);
+    filter:         drop-shadow(1px 1px 1px #fff);
+}
+
+#mute-button:hover {
+    filter: brightness(120%);
+    -webkit-filter: drop-shadow(1px 1px 1px #fff);
+    filter:         drop-shadow(1px 1px 1px #fff);
+}
+
+#phone-content-wrap {
+    position: absolute;
+    background-color: rgb(30, 30, 30);
+    width: 305px;
+    height: 657px;
+    top: 21px;
+    left: 22px;
+}

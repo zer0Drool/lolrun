@@ -5,16 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>lol run bb</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="phone.css">
 </head>
 <body>
 
     <div id="loading-wrap">
         <p></p>
     </div>
-    <p id="instructions">press W or S</p>
-    
+
+    <div id="phone-hide-wrap">
+        <img id="hide-phone" src="assets/hidePhone.png"/>
+        <div id="phone-wrap">
+            <img id="phone-img" src="./assets/phone.png"/>
+            <div id="phone-content-wrap">
+                <img id="mute-button" src="./assets/mute.png"/>
+                <p id="content-node">placeholder</p>
+            </div>
+        </div>
+    </div>
+    <audio autoplay="false" loop id="ringtone" src="./assets/ringtone.mp3"/>
+
     <script src="tween.js"></script>
     <script src="p5.js"></script>
+    <script src="phone.js" async defer></script>
     <script src="script.js"></script>
 </body>
 </html>

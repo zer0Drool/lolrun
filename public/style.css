@@ -18,7 +18,8 @@ body {
     background-image:    url('assets/paris_space.jpg');
     background-size:     cover;                      /* <------ */
     background-repeat:   no-repeat;
-    background-position: center center; 
+    background-position: center center;
+    overflow: hidden;
 }
 
 #loading-wrap {
